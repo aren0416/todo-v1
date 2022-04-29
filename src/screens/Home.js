@@ -4,6 +4,7 @@ import { Authlayout } from "../components/Authlayout";
 import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { Input } from "../components/Input";
+import { PageTitle } from "../components/PageTitle";
 import { Title } from "../components/Title";
 
 const ListWrap = styled.ul`
@@ -38,6 +39,7 @@ export const Home = () => {
 
   return (
     <Authlayout>
+      <PageTitle title="해야할일" />
       <Title>해야할 일</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input

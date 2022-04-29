@@ -1,29 +1,68 @@
+import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { loginUser } from "../apollo";
 import { Authlayout } from "../components/Authlayout";
 import { Bottom } from "../components/Bottom";
 import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { Input } from "../components/Input";
+import { PageTitle } from "../components/PageTitle";
 import { Title } from "../components/Title";
 import { routes } from "../routes";
 
+const LOGIN_MUTATION = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      ok
+      error
+      token
+    }
+  }
+`;
+
 export const Login = () => {
+  const onCompleted = (data) => {
+    const {
+      login: { ok, error, token },
+    } = data;
+    if (!ok) {
+      setError("result", {
+        message: error,
+      });
+    } else {
+      loginUser(token);
+    }
+  };
+
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted,
+  });
+
   const {
     register,
     getValues,
     handleSubmit,
     formState: { errors, isValid },
+    setError,
   } = useForm({ mode: "onChange" });
 
-  const onSubmit = () => {
-    console.log(getValues);
-  };
+  console.log(errors);
 
-  console.log(isValid);
+  const onSubmit = () => {
+    // console.log(getValues());
+    const { username, password: pwd } = getValues();
+    login({
+      variables: {
+        username: username,
+        password: pwd,
+      },
+    });
+  };
 
   return (
     <Authlayout>
+      <PageTitle title="로그인" />
       <Title>로그인</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -55,6 +94,7 @@ export const Login = () => {
         {errors?.password?.message}
 
         <Button opacity={isValid ? "1" : "0.5"} text="로그인" />
+        {errors?.result?.message}
 
         <Bottom
           text="아이디가 없나요?"

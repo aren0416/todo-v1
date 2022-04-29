@@ -5,6 +5,7 @@ import { Bottom } from "../components/Bottom";
 import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { Input } from "../components/Input";
+import { PageTitle } from "../components/PageTitle";
 import { Title } from "../components/Title";
 import { routes } from "../routes";
 
@@ -30,6 +31,7 @@ export const SignUp = () => {
 
   return (
     <Authlayout>
+      <PageTitle title="회원가입" />
       <Title>회원가입</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
