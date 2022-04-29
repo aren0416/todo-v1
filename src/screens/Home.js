@@ -1,3 +1,61 @@
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import { Authlayout } from "../components/Authlayout";
+import { Button } from "../components/Button";
+import { Form } from "../components/Form";
+import { Input } from "../components/Input";
+import { Title } from "../components/Title";
+
+const ListWrap = styled.ul`
+  width: 100%;
+`;
+
+const List = styled.li`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ListCon = styled.span``;
+
+const ListClick = styled.p``;
+
 export const Home = () => {
-  return <>Home</>;
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm({ mode: "onChange" });
+
+  const onSubmit = () => {
+    console.log(getValues());
+  };
+
+  console.log(errors);
+
+  // console.log(isValid);
+
+  return (
+    <Authlayout>
+      <Title>해야할 일</Title>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          {...register("todolist", {
+            required: "내용 입력은 필수입니다",
+          })}
+          type="text"
+          placeholder="일정을 입력해주세요"
+        />
+        {errors?.todolist?.message}
+        <Button opacity={isValid ? "1" : "0.5"} text="일정추가" />
+      </Form>
+      <ListWrap>
+        <List>
+          <ListCon></ListCon>
+          <ListClick>+</ListClick>
+        </List>
+      </ListWrap>
+    </Authlayout>
+  );
 };

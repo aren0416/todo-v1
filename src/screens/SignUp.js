@@ -45,6 +45,7 @@ export const SignUp = () => {
         />
 
         {errors?.username?.message}
+        {/* {errors && errors.username && errors.username.message} */}
 
         <Input
           {...register("password", {
