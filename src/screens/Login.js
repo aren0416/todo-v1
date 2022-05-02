@@ -1,5 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { loginUser } from "../apollo";
 import { Authlayout } from "../components/Authlayout";
@@ -22,6 +23,11 @@ const LOGIN_MUTATION = gql`
 `;
 
 export const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // console.log(location);
+
+  // console.log(message);
   const onCompleted = (data) => {
     console.log(data);
     const {
@@ -33,6 +39,9 @@ export const Login = () => {
       });
     } else {
       loginUser(token);
+      navigate(routes.home, {
+        replace: true,
+      });
     }
   };
 
@@ -65,6 +74,9 @@ export const Login = () => {
     <Authlayout>
       <PageTitle title="로그인" />
       <Title>로그인</Title>
+
+      {location?.state?.message}
+
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           {...register("username", {

@@ -41,7 +41,9 @@ export const SignUp = () => {
         message: error,
       });
     } else {
-      navigate(routes.home);
+      navigate(routes.home, {
+        state: { message: "회원가입이 완료되었습니다. 로그인 해주세요" },
+      });
     }
   };
 
@@ -62,7 +64,7 @@ export const SignUp = () => {
   password.current = watch("password", "");
 
   const onSubmit = (/* data */) => {
-    console.log(getValues());
+    // console.log(getValues());
     // console.log(data);
     // console.log({ ...data });
     const { username, nickName, password } = getValues();
@@ -75,7 +77,7 @@ export const SignUp = () => {
     });
   };
 
-  console.log(isValid);
+  // console.log(isValid);
 
   return (
     <Authlayout>
