@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { logoutUser } from "../apollo";
 import { Authlayout } from "../components/Authlayout";
 import { Button } from "../components/Button";
 import { Form } from "../components/Form";
@@ -58,6 +59,7 @@ export const Home = () => {
           <ListClick>+</ListClick>
         </List>
       </ListWrap>
+      <button onClick={() => logoutUser()}>로그아웃</button>
     </Authlayout>
   );
 };

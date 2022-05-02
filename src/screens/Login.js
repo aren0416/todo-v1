@@ -23,6 +23,7 @@ const LOGIN_MUTATION = gql`
 
 export const Login = () => {
   const onCompleted = (data) => {
+    console.log(data);
     const {
       login: { ok, error, token },
     } = data;
